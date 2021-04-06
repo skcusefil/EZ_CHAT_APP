@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="clientXamarin.Views.RegisterPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" >
+                    <Label Text="Register to My EZ CHAT app!" FontSize="Large" TextColor="#5634A0" />
+                </StackLayout>
+            </Frame>
+            <Frame HasShadow="False">
+                <StackLayout Orientation="Vertical" Spacing="10">
+                    <Entry x:Name="Email" Text="{Binding Username}" 
+                           Placeholder="Email"  
+                           HorizontalOptions="Center"
+                           PlaceholderColor="#2196F3" HeightRequest="40"  
+                           WidthRequest="150"
+                           Keyboard="Email"  
+                           HorizontalTextAlignment="Center"
+                           TextColor="Black"/>
+                    <Entry x:Name="Password" Text="{Binding Password}" 
+                           Placeholder="Password"   
+                           PlaceholderColor="#2196F3" 
+                           HeightRequest="40"  WidthRequest="150"
+                           HorizontalOptions="Center" 
+                           HorizontalTextAlignment="Center"
+                           IsPassword="True"  
+                           TextColor="Black"/>
+                </StackLayout>
+            </Frame>
+            <Button Command="{Binding RegisterCommand}" Text="Register" TextColor="White"  
+                    Margin="20"
+                    FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" CornerRadius="10"
+                    BackgroundColor="#088da5" />
+            <BoxView HeightRequest="2" />
+            <StackLayout>
+                <Label Text="{Binding RegisterResult}" />
+            </StackLayout>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
