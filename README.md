@@ -2,4 +2,4 @@
 
 not yet finish...and still look very ugly 
 
-\(o^_^o)/
+\\(o^_^o)/
