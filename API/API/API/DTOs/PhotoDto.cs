@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public class UserDto
+    public class PhotoDto
     {
-        public string Username { get; set; }
-        public string DisplayName { get; set; }
-        public string Token { get; set; }
+        public int Id { get; set; }
         public string Url { get; set; }
-
+        public bool IsProfilePhoto { get; set; }
     }
 }

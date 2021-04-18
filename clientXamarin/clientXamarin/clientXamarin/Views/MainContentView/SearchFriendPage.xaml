@@ -4,9 +4,7 @@
              x:Class="clientXamarin.Views.MainContentView.SearchFriendPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <SearchBar Placeholder="Search friend from username..." x:Name="searchNewFriend"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

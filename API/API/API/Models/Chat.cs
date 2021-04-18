@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public class User
+    public class Chat
     {
         public int Id { get; set; }
-        public string Username { get; set; }
+        public string Name { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
     }
 }

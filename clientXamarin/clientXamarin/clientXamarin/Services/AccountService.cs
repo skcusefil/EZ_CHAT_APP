@@ -12,7 +12,9 @@ namespace clientXamarin.Services
 {
     public class AccountService
     {
-        private readonly static string localHost = @"https://192.168.178.25:45456/api/account/";
+        //private readonly static string localHost = "https://192.168.178.25:45456/api/account/";
+        private readonly static string localHost = "https://10.0.2.2:5001/api/account/";
+
 
         public static async Task<bool> LoginAsync(string username, string password)
         {

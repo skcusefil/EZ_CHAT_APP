@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public class UserDto
+    public class MemberDto
     {
+        public int Id { get; set; }
         public string Username { get; set; }
         public string DisplayName { get; set; }
-        public string Token { get; set; }
-        public string Url { get; set; }
+        public string PhotoUrl { get; set; }
+        public ICollection<PhotoDto> Photos { get; set; } = new List<PhotoDto>();
 
     }
 }
