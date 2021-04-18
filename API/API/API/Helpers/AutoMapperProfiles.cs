@@ -13,13 +13,21 @@ namespace API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<AppUser, UserDto>();
+
             CreateMap<RegisterDto, AppUser>();
+
             CreateMap<AppUser, MemberDto>()
                  .ForMember(x => x.PhotoUrl, opt => opt
                       .MapFrom(s => s.Photos.FirstOrDefault(x => x.IsProfilePhoto).Url));
             CreateMap<Photo, PhotoDto>();
+
             CreateMap<MemberUpdateDto, AppUser>();
 
+            CreateMap<Message, MessageDto>()
+               .ForMember(dest => dest.SenderPhotoUrl, opt =>
+                   opt.MapFrom(s => s.Sender.Photos.FirstOrDefault(x => x.IsProfilePhoto).Url))
+               .ForMember(dest => dest.RecipientPhotoUrl, opt =>
+                   opt.MapFrom(s => s.Recipient.Photos.FirstOrDefault(x => x.IsProfilePhoto).Url));
         }
     }
 }

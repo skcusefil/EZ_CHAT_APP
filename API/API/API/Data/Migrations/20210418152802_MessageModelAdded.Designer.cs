@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210418152802_MessageModelAdded")]
+    partial class MessageModelAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,24 +74,6 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Models.Connection", b =>
-                {
-                    b.Property<string>("ConnectionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ConnectionId");
-
-                    b.HasIndex("GroupName");
-
-                    b.ToTable("Connections");
-                });
-
             modelBuilder.Entity("API.Models.FriendInvitation", b =>
                 {
                     b.Property<int>("InvitedUserId")
@@ -103,58 +87,6 @@ namespace API.Data.Migrations
                     b.HasIndex("SourceUserId");
 
                     b.ToTable("FriendInvitations");
-                });
-
-            modelBuilder.Entity("API.Models.Group", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("API.Models.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DateRead")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("MessageSent")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("RecipientDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RecipientId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("RecipientUsername")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("SenderDelete")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SenderUsername")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipientId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("API.Models.Photo", b =>
@@ -182,13 +114,6 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Models.Connection", b =>
-                {
-                    b.HasOne("API.Models.Group", null)
-                        .WithMany("Connections")
-                        .HasForeignKey("GroupName");
-                });
-
             modelBuilder.Entity("API.Models.FriendInvitation", b =>
                 {
                     b.HasOne("API.Models.AppUser", "InvitedUser")
@@ -208,25 +133,6 @@ namespace API.Data.Migrations
                     b.Navigation("SourceUser");
                 });
 
-            modelBuilder.Entity("API.Models.Message", b =>
-                {
-                    b.HasOne("API.Models.AppUser", "Recipient")
-                        .WithMany("MessagesRecieve")
-                        .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.AppUser", "Sender")
-                        .WithMany("MessagesSend")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Recipient");
-
-                    b.Navigation("Sender");
-                });
-
             modelBuilder.Entity("API.Models.Photo", b =>
                 {
                     b.HasOne("API.Models.AppUser", "AppUser")
@@ -244,16 +150,7 @@ namespace API.Data.Migrations
 
                     b.Navigation("InvitedFrom");
 
-                    b.Navigation("MessagesRecieve");
-
-                    b.Navigation("MessagesSend");
-
                     b.Navigation("Photos");
-                });
-
-            modelBuilder.Entity("API.Models.Group", b =>
-                {
-                    b.Navigation("Connections");
                 });
 #pragma warning restore 612, 618
         }

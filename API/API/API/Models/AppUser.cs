@@ -19,8 +19,9 @@ namespace API.Models
         public ICollection<FriendInvitation> InvitedBy { get; set; }
         public ICollection<FriendInvitation> InvitedFrom { get; set; }
 
-        public ICollection<Photo> Photos { get; set; } 
+        public ICollection<Photo> Photos { get; set; }
 
-
+        public ICollection<Message> MessagesSend { get; set; }
+        public ICollection<Message> MessagesRecieve { get; set; }
     }
 }
