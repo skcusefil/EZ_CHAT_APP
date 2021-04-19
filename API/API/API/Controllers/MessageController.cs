@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Extensions;
+using API.Helpers;
 using API.Interface;
 using API.Models;
 using AutoMapper;
@@ -52,6 +53,34 @@ namespace API.Controllers
             if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MessageDto>(message));
 
             return BadRequest("Fail to add message");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageForUser([FromQuery] MessageParams messageParams)
+        {
+            messageParams.Username = User.GetUsername();
+            var message = await _unitOfWork.MessageRepository.GetMessagesForUser(messageParams);
+
+            return Ok(message);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMessage(int id)
+        {
+            var username = User.GetUsername();
+            var message = await _unitOfWork.MessageRepository.GetMessage(id);
+
+            if (message.Sender.UserName != username && message.Recipient.UserName != username) return Unauthorized();
+
+            if (message.Sender.UserName == username) message.SenderDelete = true;
+
+            if (message.Recipient.UserName == username) message.RecipientDeleted = true;
+
+            if (message.SenderDelete && message.RecipientDeleted) _unitOfWork.MessageRepository.DeleteMessage(message);
+
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest("Problem deleting the message");
         }
     }
 }

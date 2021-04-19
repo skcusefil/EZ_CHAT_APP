@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Helpers;
 using API.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace API.Interface
         void AddMessage(Message message);
         void DeleteMessage(Message message);
         Task<Message> GetMessage(int id);
+        Task<IEnumerable<MessageDto>> GetMessagesForUser(MessageParams messageParams);
         Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername);
     }
 }

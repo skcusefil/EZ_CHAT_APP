@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Extensions;
+using API.Helpers;
 using API.Interface;
 using API.Models;
 using AutoMapper;
@@ -65,7 +66,24 @@ namespace API.Data
                            .FirstOrDefaultAsync(x => x.Name == groupName);
         }
 
-        public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
+        public async Task<IEnumerable<MessageDto>> GetMessagesForUser(MessageParams messageParams)
+        {
+            var query = _context.Messages
+                            .OrderByDescending(m => m.MessageSent)
+                            .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
+                            .AsQueryable();
+            query = messageParams.Container switch
+            {
+                "Inbox" => query.Where(u => u.RecipientUsername == messageParams.Username
+                && u.RecipientDeleted == false),
+                "Outbox" => query.Where(u => u.SenderUsername == messageParams.Username && u.SenderDelete == false),
+                _ => query.Where(u => u.RecipientUsername == messageParams.Username && u.RecipientDeleted == false && u.DateRead == null)
+            };
+
+            return await query.ToListAsync();
+        }
+
+            public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
             var messages = await _context.Messages
                .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false
