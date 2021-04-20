@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:clientXamarin.Views.MainContentView"
              x:Class="clientXamarin.View.MainContent.AppShell">
     
-    <TabBar x:Name="tabBar">
+    <TabBar x:Name="tabBar" >
         <Tab Title="Main" x:Name="mainChatPage">
             <ShellContent ContentTemplate="{DataTemplate local:ChatMainPage}"/>
         </Tab>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using clientXamarin.Services;
+using clientXamarin.ViewModels.MainContentViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,10 @@ namespace clientXamarin.Views.MainContentView
         public ChatMainPage()
         {
             InitializeComponent();
+
+            var page = new NavigationService();
+
+            BindingContext = new ChatMainPageViewModel(page);
         }
     }
 }

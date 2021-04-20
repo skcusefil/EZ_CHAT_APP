@@ -22,6 +22,7 @@ namespace clientXamarin.ViewModels
             _pageNavigation = pageNavigation;
         }
 
+        private const string Key = "accessToken";
         private string _username;
 
         public string Username
@@ -47,6 +48,8 @@ namespace clientXamarin.ViewModels
             set => SetProperty(ref _loginResult, value);
         }
 
+        private User _userToken;
+        public User UserToken { get => _userToken; set => SetProperty(ref _userToken, value); }
 
         public ICommand LoginCommand { get; private set; }
 
@@ -62,7 +65,6 @@ namespace clientXamarin.ViewModels
             Preferences.Set("password", Password);
             if (response)
             {
-                LoginResult = "Sucessfully!";
                 Application.Current.MainPage = new AppShell();
             }
             else

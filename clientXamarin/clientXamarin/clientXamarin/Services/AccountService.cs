@@ -12,8 +12,8 @@ namespace clientXamarin.Services
 {
     public class AccountService
     {
-        //private readonly static string localHost = "https://192.168.178.25:45456/api/account/";
-        private readonly static string localHost = "https://10.0.2.2:5001/api/account/";
+        private readonly static string localHost = "https://192.168.178.25:45455/api/account/";
+        //private readonly static string localHost = "https://10.0.2.2:5001/api/account/";
 
 
         public static async Task<bool> LoginAsync(string username, string password)
@@ -23,6 +23,7 @@ namespace clientXamarin.Services
                 Username = username,
                 Password = password
             };
+
 
 
             HttpClientHandler clientHandler = new HttpClientHandler();
@@ -37,9 +38,11 @@ namespace clientXamarin.Services
             if (!response.IsSuccessStatusCode) return false;
 
             var jsonResult = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<UserToken>(jsonResult);
+            var result = JsonConvert.DeserializeObject<User>(jsonResult);
             Preferences.Set("accessToken", result.Token);
             Preferences.Set("user", result.Username);
+            Preferences.Set("displayName", result.DisplayName);
+            Preferences.Set("photoUrl", result.Url);
 
             return true;
         }
