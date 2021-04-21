@@ -1,4 +1,5 @@
-﻿using clientXamarin.Models;
+﻿using clientXamarin.Configurations;
+using clientXamarin.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,6 @@ namespace clientXamarin.Services
 {
     public class AccountService
     {
-        private readonly static string localHost = "https://192.168.178.25:45455/api/account/";
-        //private readonly static string localHost = "https://10.0.2.2:5001/api/account/";
-
-
         public static async Task<bool> LoginAsync(string username, string password)
         {
             var loginModel = new LoginModel()
@@ -33,7 +30,7 @@ namespace clientXamarin.Services
             var httpClient = new HttpClient(clientHandler);
             var json = JsonConvert.SerializeObject(loginModel);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(localHost+"login", content);
+            var response = await httpClient.PostAsync(ServerConnectionString.RestUrl + "api/account/login", content);
 
             if (!response.IsSuccessStatusCode) return false;
 
@@ -61,7 +58,7 @@ namespace clientXamarin.Services
             var httpClient = new HttpClient(clientHandler);
             var json = JsonConvert.SerializeObject(registerModel);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(localHost + "register", content);
+            var response = await httpClient.PostAsync(ServerConnectionString.RestUrl + "api/account/register", content);
 
             if (!response.IsSuccessStatusCode) return false;
 

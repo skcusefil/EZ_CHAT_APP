@@ -30,18 +30,43 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         }
 
         public ICommand SearchFriendCommand { get; private set; }
+        public ICommand NavigateToChatCommand { get; private set; }
 
         private void InitializeCommand()
         {
             SearchFriendCommand = new Command<string>(async (s) => await SearchFriend(s));
+            NavigateToChatCommand = new Command(async () => await NavigateToChatRoom());
+        }
+
+        private async Task NavigateToChatRoom()
+        {
+            var otherUsername = "abc";
+            var isConnected = await ChatService.Connect(otherUsername);
+
+            if(isConnected)
+            {
+                await _navigationService.PushAsync(new ChatRoomPage());
+            }
         }
 
         private async Task SearchFriend(string s)
         {
-            var member = await MemberService.GetMembers(s);
+            try
+            {
+                var member = await MemberService.GetMembers(s);
 
-            var text = "DisplayName: " + member.DisplayName + ", username: " + member.Username;
-            await App.Current.MainPage.DisplayAlert("Member", "Found" + text, "Cancel");
+                var text = "DisplayName: " + member.DisplayName + ", username: " + member.Username;
+                if (text != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Member", "Found" + text, "Cancel");
+
+                }
+            }
+            catch(Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", ex.Message, "Cancel");
+            }
+
         }
     }
 }

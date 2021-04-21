@@ -23,6 +23,7 @@
                 </StackLayout>
                 <StackLayout Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" >
                     <Label Text="Here friend list" />
+                    <Button Text="Start Chat with abc" Command="{Binding NavigateToChatCommand}" />
                 </StackLayout>
             </Grid>
         </StackLayout>

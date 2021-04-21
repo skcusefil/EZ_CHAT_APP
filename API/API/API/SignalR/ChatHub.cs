@@ -4,6 +4,7 @@ using API.Interface;
 using API.Models;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace API.SignalR
 {
+    [Authorize]
     public class ChatHub : Hub
     {
         private readonly IMapper _mapper;
