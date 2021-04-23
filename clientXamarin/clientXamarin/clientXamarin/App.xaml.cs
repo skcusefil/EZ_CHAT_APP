@@ -18,6 +18,7 @@ namespace clientXamarin
             InitializeComponent();
 
             var accessToken = Preferences.Get("accessToken", "");
+            //MainPage = new NavigationPage(new MainPage());
 
             if (string.IsNullOrEmpty(accessToken))
             {

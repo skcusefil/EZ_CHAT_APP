@@ -41,19 +41,14 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         private async Task NavigateToChatRoom()
         {
             var otherUsername = "abc";
-            var isConnected = await ChatService.Connect(otherUsername);
-
-            if(isConnected)
-            {
-                await _navigationService.PushAsync(new ChatRoomPage());
-            }
+            await _navigationService.PushAsync(new ChatRoomPage(otherUsername));
         }
 
         private async Task SearchFriend(string s)
         {
             try
             {
-                var member = await MemberService.GetMembers(s);
+                var member = await MemberService.GetMember(s);
 
                 var text = "DisplayName: " + member.DisplayName + ", username: " + member.Username;
                 if (text != null)

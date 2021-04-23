@@ -14,7 +14,7 @@ namespace clientXamarin.Services
     class MemberService
     {
 
-        public static async Task<Member> GetMembers(string username)
+        public static async Task<Member> GetMember(string username)
         {
 
         HttpClientHandler clientHandler = new HttpClientHandler();
