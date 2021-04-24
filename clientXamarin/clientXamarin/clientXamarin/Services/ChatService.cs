@@ -26,9 +26,12 @@ namespace clientXamarin.Services
  
         public static ObservableCollection<ChatMessage> _chats { get; set; } = new ObservableCollection<ChatMessage>();
 
-        private static Subject<IEnumerable<ChatMessage>> _newMessage = new Subject<IEnumerable<ChatMessage>>();
+        private static Subject<IEnumerable<ChatMessage>> _newMessages = new Subject<IEnumerable<ChatMessage>>();
 
-        public static IObservable<IEnumerable<ChatMessage>> NewMeussageReceived => _newMessage;
+        public static IObservable<IEnumerable<ChatMessage>> NewMeussagesReceived => _newMessages;
+
+        private static Subject<ChatMessage> _newMessage = new Subject<ChatMessage>();
+        public static IObservable<ChatMessage> NewMeussageReceived => _newMessage;
 
 
         public ChatService(string user, string otherUsername)
@@ -64,16 +67,14 @@ namespace clientXamarin.Services
                 _connection.On<IEnumerable<ChatMessage>>("ReceiveMessageThread", data =>
 
                 {
-                    _newMessage.OnNext(data);
+                    _newMessages.OnNext(data);
 
-                    
-                   
-                    //chats = data;
                 });
 
                 _connection.On<ChatMessage>("NewMessage", data =>
                 {
-                    _chats.Add(data);
+                    _newMessage.OnNext(data);
+                    //_chats.Add(data);
                 });
 
                 _connection.On<Group>("UpdatedGroup", group =>
@@ -98,11 +99,6 @@ namespace clientXamarin.Services
                 await App.Current.MainPage.DisplayAlert("Error", ex.Message, "Cancel");
             }
 
-            foreach (var item in _chats)
-            {
-                Debug.WriteLine(item.Content);
-            }
-
             return false;
         }
 
@@ -113,13 +109,6 @@ namespace clientXamarin.Services
 
         public static async Task SendMessage(string otherUsername, string message)
         {
-            var createMessage = new CreateMessage
-            {
-                RecipientUsername = otherUsername,
-                Content = message
-            };
-
-
             await _connection.InvokeAsync<CreateMessage>("SendMessage", new CreateMessage { RecipientUsername=otherUsername, Content = message});
         }
 

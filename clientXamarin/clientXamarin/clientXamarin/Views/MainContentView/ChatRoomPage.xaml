@@ -21,18 +21,17 @@
                                 <ViewCell.View>
                                     <StackLayout Margin="0,0,0,30">
                                         <StackLayout Orientation="Horizontal">
-                                            <Label Text="{Binding SenderUsername}" />
-                                            <Label Text="{Binding DateRead}" />
+                                            <Label FontSize="Medium" Text="{Binding SenderUsername}" />
+                                            <Label FontSize="Medium" Text="Say :" />
                                         </StackLayout>
-
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="sent at:" />
+                                            <Label Text="{Binding MessageSent}" />
+                                        </StackLayout>
                                         <Label FontSize="Medium"
                                            LineBreakMode="WordWrap"
                                            Text="{Binding Content}" />
 
-                                        <!--<StackLayout Orientation="Horizontal">
-                                            <Label Text="at:" />
-                                            <Label Text="{Binding TimeReceived}" />
-                                        </StackLayout>-->
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

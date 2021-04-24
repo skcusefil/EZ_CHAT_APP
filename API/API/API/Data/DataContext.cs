@@ -49,7 +49,7 @@ namespace API.Data
             .WithMany(m => m.MessagesSend)
             .OnDelete(DeleteBehavior.Restrict);
 
-            builder.ApplyUtcDateTimeConverter();
+            //builder.ApplyUtcDateTimeConverter();
         }
 
         public DbSet<AppUser> Users { get; set; }

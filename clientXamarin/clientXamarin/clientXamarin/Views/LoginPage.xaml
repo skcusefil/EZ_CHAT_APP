@@ -6,7 +6,7 @@
     <StackLayout>
         <Frame>
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center" >
-                <Label Text="Register to My EZ CHAT app!" FontSize="Large" TextColor="#5634A0" />
+                <Label Text="Login to My EZ CHAT app!" FontSize="Large" TextColor="#5634A0" />
             </StackLayout>
         </Frame>
         <Frame HasShadow="False">

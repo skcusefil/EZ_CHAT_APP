@@ -23,7 +23,9 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         private ObservableCollection<ChatMessage> _messages;
         public ObservableCollection<ChatMessage> Messages { get=> _messages; set => SetProperty(ref _messages,value); }
 
+        private IDisposable _messagesSubscription;
         private IDisposable _messageSubscription;
+
 
         private string _otherUsername;
 
@@ -36,7 +38,6 @@ namespace clientXamarin.ViewModels.MainContentViewModel
             _otherUsername = otherUsername;
             Connect();
             InitializeCommand();
-            Messages = new ObservableCollection<ChatMessage>();
         }
 
         public ICommand SendMessageCommand { get; private set; }
@@ -48,41 +49,37 @@ namespace clientXamarin.ViewModels.MainContentViewModel
 
         public void Init()
         {
-            _messageSubscription = ChatService.NewMeussageReceived.Subscribe(GetMessages);
+            _messagesSubscription = ChatService.NewMeussagesReceived.Subscribe(GetMessages);
+            _messageSubscription = ChatService.NewMeussageReceived.Subscribe(GetMessage);
+
+    }
+
+        private void GetMessage(ChatMessage message)
+        {
+            Messages.Add(message);
         }
 
         private void GetMessages(IEnumerable<ChatMessage> messages)
         {
+            Messages = new ObservableCollection<ChatMessage>(messages);
 
-            foreach (var message in messages)
-            {
-                Messages.Add(message);
-
-            }
-            foreach (var item in Messages)
-            {
-                Debug.WriteLine(item.Content);
-
-            }
         }
 
         private async void Connect()
         {
-            await ChatService.Connect(_otherUsername);
-            Messages = ChatService._chats;
-
-     
+            await ChatService.Connect(_otherUsername);   
         }
 
         private async void SendMessage()
         {
             await ChatService.SendMessage(_otherUsername, _message);
-            //set message to empty after send
-            Message = "";
+            //set input empty after send
+            Message = string.Empty;
         }
 
         public void Dispose()
         {
+            _messagesSubscription.Dispose();
             _messageSubscription.Dispose();
         }
     }

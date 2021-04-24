@@ -16,7 +16,7 @@ namespace API.Models
         public AppUser Recipient { get; set; }
         public string Content { get; set; }
         public DateTime? DateRead { get; set; } //will set to null if not read
-        public DateTime MessageSent { get; set; } = DateTime.UtcNow;
+        public DateTime MessageSent { get; set; } = DateTime.Now;
         public bool SenderDelete { get; set; }
         public bool RecipientDeleted { get; set; }
     }
