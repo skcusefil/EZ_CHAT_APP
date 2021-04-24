@@ -35,12 +35,11 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         private void InitializeCommand()
         {
             SearchFriendCommand = new Command<string>(async (s) => await SearchFriend(s));
-            NavigateToChatCommand = new Command(async () => await NavigateToChatRoom());
+            NavigateToChatCommand = new Command<string>(async (u) => await NavigateToChatRoom(u));
         }
 
-        private async Task NavigateToChatRoom()
+        private async Task NavigateToChatRoom(string otherUsername)
         {
-            var otherUsername = "abc";
             await _navigationService.PushAsync(new ChatRoomPage(otherUsername));
         }
 
@@ -50,12 +49,7 @@ namespace clientXamarin.ViewModels.MainContentViewModel
             {
                 var member = await MemberService.GetMember(s);
 
-                var text = "DisplayName: " + member.DisplayName + ", username: " + member.Username;
-                if (text != null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Member", "Found" + text, "Cancel");
-
-                }
+                var otherUsername = member.Username;
             }
             catch(Exception ex)
             {

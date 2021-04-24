@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="clientXamarin.Views.MainContentView.ChatRoomPage">
+             x:Class="clientXamarin.Views.MainContentView.ChatRoomPage"
+             Title="{Binding Title}">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -12,7 +13,8 @@
                 <ListView Grid.ColumnSpan="2"
                       ItemsSource="{Binding Messages}"
                       VerticalOptions="FillAndExpand"
-                      HasUnevenRows="True">
+                      x:Name="chatListView"
+                    HasUnevenRows="True" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -20,7 +22,7 @@
                                     <StackLayout Margin="0,0,0,30">
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="{Binding SenderUsername}" />
-                                            <Label Text="says:" />
+                                            <Label Text="{Binding DateRead}" />
                                         </StackLayout>
 
                                         <Label FontSize="Medium"

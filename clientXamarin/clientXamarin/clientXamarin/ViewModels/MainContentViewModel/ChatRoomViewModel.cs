@@ -17,7 +17,6 @@ namespace clientXamarin.ViewModels.MainContentViewModel
     public class ChatRoomViewModel : BaseViewModel, IDisposable
     {
         private string _message = string.Empty;
-        private string _otherUsername ="lisa";
 
         public string Message { get => _message; set => SetProperty(ref _message,value); }
 
@@ -26,8 +25,15 @@ namespace clientXamarin.ViewModels.MainContentViewModel
 
         private IDisposable _messageSubscription;
 
-        public ChatRoomViewModel()
+        private string _otherUsername;
+
+        public string OtherUsername { get => _otherUsername; set => SetProperty(ref _otherUsername, value); }
+
+        public string Title { get => "Chatting with " + OtherUsername; }
+
+        public ChatRoomViewModel(string otherUsername)
         {
+            _otherUsername = otherUsername;
             Connect();
             InitializeCommand();
             Messages = new ObservableCollection<ChatMessage>();
@@ -62,9 +68,7 @@ namespace clientXamarin.ViewModels.MainContentViewModel
 
         private async void Connect()
         {
-            var user = Preferences.Get("user", "");
             await ChatService.Connect(_otherUsername);
-           // var service = new ChatService(user, _otherUsername);
             Messages = ChatService._chats;
 
      

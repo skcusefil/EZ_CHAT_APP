@@ -18,12 +18,13 @@
                                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
                 </StackLayout>
                 <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" >
-                    <Label Text="Welcome" />
+                    <Label Text="I am" />
                     <Label Text= "{Binding DisplayName}" />
                 </StackLayout>
                 <StackLayout Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" >
                     <Label Text="Here friend list" />
-                    <Button Text="Start Chat with abc" Command="{Binding NavigateToChatCommand}" />
+                    <Button Text="Start Chat with abc" Command="{Binding NavigateToChatCommand}" CommandParameter="abc" />
+                    <Button Text="Start Chat with lisa" Command="{Binding NavigateToChatCommand}" CommandParameter="lisa" />
                 </StackLayout>
             </Grid>
         </StackLayout>

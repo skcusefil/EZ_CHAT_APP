@@ -13,13 +13,19 @@ namespace clientXamarin.Views.MainContentView
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChatRoomPage : ContentPage
     {
+        private readonly string _otherUsername;
+
         public ChatRoomPage(string otherUsername)
         {
             InitializeComponent();
+            _otherUsername = otherUsername;
+
+            ViewModel = new ChatRoomViewModel(otherUsername);
             BindingContext = ViewModel;
+
         }
 
-        public ChatRoomViewModel ViewModel { get; } = new ChatRoomViewModel();
+        public ChatRoomViewModel ViewModel { get; }
 
 
         protected override void OnAppearing()

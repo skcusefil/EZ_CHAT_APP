@@ -78,7 +78,7 @@ namespace clientXamarin.Services
 
                 _connection.On<Group>("UpdatedGroup", group =>
                 {
-                    if (group.Connections.Any(x => x.Username == "abc"))
+                    if (group.Connections.Any(x => x.Username == otherUsername))
                     {
                         foreach (var chat in _chats)
                         {
