@@ -41,6 +41,7 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         private async Task NavigateToChatRoom(string otherUsername)
         {
             await _navigationService.PushAsync(new ChatRoomPage(otherUsername));
+            Preferences.Set("ohterUsername", otherUsername);
         }
 
         private async Task SearchFriend(string s)

@@ -2,7 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="clientXamarin.Views.MainContentView.ChatRoomPage"
+             xmlns:chatAligment="clr-namespace:clientXamarin.Behaviours"
              Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <chatAligment:ChatAlignmentConverter x:Key="ChatAlignmentConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -19,19 +27,33 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout Margin="0,0,0,30">
-                                        <StackLayout Orientation="Horizontal">
-                                            <Label FontSize="Medium" Text="{Binding SenderUsername}" />
-                                            <Label FontSize="Medium" Text="Say :" />
-                                        </StackLayout>
-                                        <StackLayout Orientation="Horizontal">
-                                            <Label Text="sent at:" />
-                                            <Label Text="{Binding MessageSent}" />
-                                        </StackLayout>
-                                        <Label FontSize="Medium"
-                                           LineBreakMode="WordWrap"
-                                           Text="{Binding Content}" />
-
+                                    <StackLayout HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
+                                        <Frame BackgroundColor="Pink" 
+                                               HorizontalOptions="Fill"
+                                               Padding="10" Margin="0,10,10,0"
+                                               CornerRadius="5" >
+                                            <StackLayout>
+                                                <StackLayout Orientation="Horizontal" 
+                                                     HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
+                                                    <Label x:Name="textOwner" FontSize="Medium" 
+                                                   Text="{Binding SenderUsername}"  />
+                                                    <Label FontSize="Medium" Text="Say :" />
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" 
+                                                     HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
+                                                    <Label Text="sent at:" 
+                                                   HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}"/>
+                                                    <Label Text="{Binding MessageSent, StringFormat='{}{0:hh\\:mm}'}" />
+                                                </StackLayout>
+                                                <StackLayout HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
+                                                    <Label  FontSize="Medium" 
+                                                    HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}"
+                                                    LineBreakMode="WordWrap"
+                                                    Text="{Binding Content}" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+                                        
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
@@ -52,7 +74,11 @@
                 </StackLayout>
 
                 <StackLayout Grid.Column="1" HorizontalOptions="EndAndExpand">
-                    <Button Text="Send" Command="{Binding SendMessageCommand}" />
+                    <Button Text="Send" Command="{Binding SendMessageCommand}"  
+                            TextColor="White"  
+                            Margin="20"
+                            FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" CornerRadius="10"
+                            BackgroundColor="#088da5"/>
                 </StackLayout>
             </StackLayout>
         </Grid>
