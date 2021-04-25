@@ -2,12 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="clientXamarin.Views.MainContentView.ChatRoomPage"
-             xmlns:chatAligment="clr-namespace:clientXamarin.Behaviours"
+             xmlns:converter="clr-namespace:clientXamarin.Behaviours"
              Title="{Binding Title}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <chatAligment:ChatAlignmentConverter x:Key="ChatAlignmentConverter" />
+            <converter:ChatAlignmentConverter x:Key="ChatAlignmentConverter" />
+            <converter:ColorConverter x:Key="ColorConverter"  />
+            <converter:BooleanConverterUser x:Key="BooleanConverterUser"/>
+            <converter:BooleanConvertertextOtherUser x:Key="BooleanConvertertextOtherUser"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -27,33 +30,92 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
-                                        <Frame BackgroundColor="Pink" 
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal"
+                                                 HorizontalOptions="End"
+                                                 IsVisible="{Binding SenderUsername, Converter={x:StaticResource BooleanConverterUser}}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackLayout Grid.Column="0" 
+                                                         VerticalOptions="End"
+                                                     Margin="0,0,0,10"  
+                                                     HorizontalOptions="End"
+                                                     >
+                                                    <Label Text="{Binding MessageSent, StringFormat='{}{0:hh\\:mm}'}" 
+                                                           FontSize="Small"
+                                                   />
+                                                </StackLayout>
+                                                <StackLayout Grid.Column="1">
+                                                    <Frame BackgroundColor="LightBlue"
                                                HorizontalOptions="Fill"
-                                               Padding="10" Margin="0,10,10,0"
-                                               CornerRadius="5" >
-                                            <StackLayout>
-                                                <StackLayout Orientation="Horizontal" 
-                                                     HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
-                                                    <Label x:Name="textOwner" FontSize="Medium" 
-                                                   Text="{Binding SenderUsername}"  />
-                                                    <Label FontSize="Medium" Text="Say :" />
+                                               Padding="10" Margin="0,10,5,10"
+                                               CornerRadius="20" >
+                                                        <StackLayout>
+                                                            <StackLayout Orientation="Horizontal" 
+                                                     HorizontalOptions="End">
+                                                                <Label x:Name="textOwner" FontSize="Medium" 
+                                                   Text="{Binding SenderDisplayName}"  />
+                                                                <Label FontSize="Medium" Text="Say :" />
+                                                            </StackLayout>
+                                                       
+                                                            <StackLayout HorizontalOptions="End">
+                                                                <Label  FontSize="Medium" 
+                                                            HorizontalOptions="End"
+                                                            LineBreakMode="WordWrap"
+                                                            Text="{Binding Content}" 
+                                                            />
+                                                            </StackLayout>
+                                                        </StackLayout>
+                                                    </Frame>
                                                 </StackLayout>
-                                                <StackLayout Orientation="Horizontal" 
-                                                     HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
-                                                    <Label Text="sent at:" 
-                                                   HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}"/>
-                                                    <Label Text="{Binding MessageSent, StringFormat='{}{0:hh\\:mm}'}" />
+                                            </Grid>
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal"
+                                                 HorizontalOptions="Start"
+                                                 IsVisible="{Binding SenderUsername, Converter={x:StaticResource BooleanConvertertextOtherUser}}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Grid.Column="0">
+                                                    <Frame BackgroundColor="LightPink"
+                                               HorizontalOptions="Fill"
+                                               Padding="10" Margin="5,10,0,10"
+                                               CornerRadius="20" >
+                                                        <StackLayout>
+                                                            <StackLayout Orientation="Horizontal" 
+                                                     HorizontalOptions="Start">
+                                                                <Label FontSize="Medium" 
+                                                   Text="{Binding SenderDisplayName}"  />
+                                                                <Label FontSize="Medium" Text="Say :" />
+                                                            </StackLayout>
+                                                            <StackLayout HorizontalOptions="Start">
+                                                                <Label  FontSize="Medium" 
+                                                            HorizontalOptions="Start"
+                                                            LineBreakMode="WordWrap"
+                                                            Text="{Binding Content}" 
+                                                            />
+                                                            </StackLayout>
+                                                        </StackLayout>
+                                                    </Frame>
                                                 </StackLayout>
-                                                <StackLayout HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}">
-                                                    <Label  FontSize="Medium" 
-                                                    HorizontalOptions="{Binding SenderUsername, Converter={x:StaticResource ChatAlignmentConverter}}"
-                                                    LineBreakMode="WordWrap"
-                                                    Text="{Binding Content}" />
+                                                <StackLayout Grid.Column="1" 
+                                                         VerticalOptions="End"
+                                                     Margin="0,0,0,10"  
+                                                     HorizontalOptions="Start"
+                                                     >
+                                                    <Label FontSize="Small"
+                                                        Text="{Binding MessageSent, StringFormat='{}{0:hh\\:mm}'}" 
+                                                   />
                                                 </StackLayout>
-                                            </StackLayout>
-                                        </Frame>
-                                        
+                                            </Grid>
+                                        </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
@@ -69,7 +131,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand">
+                <StackLayout Grid.Column="0" VerticalOptions="End">
                     <Entry Placeholder="Write message here" Text="{Binding Message, Mode=TwoWay}" />
                 </StackLayout>
 

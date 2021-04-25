@@ -13,13 +13,13 @@ namespace clientXamarin.ViewModels.MainContentViewModel
     public class ChatMainPageViewModel : BaseViewModel
     {
 
-        private string _user;
-        public string User { get => _user; set => SetProperty(ref _user, value); }
-
         private readonly INavigationService _navigationService;
         private readonly string _displayName;
 
         public string DisplayName { get => _displayName; }
+
+        private string _username;
+        public string Username { get => _username; }
 
 
         public ChatMainPageViewModel(INavigationService navigationService)
@@ -27,6 +27,7 @@ namespace clientXamarin.ViewModels.MainContentViewModel
             InitializeCommand();
             _navigationService = navigationService;
             _displayName = Preferences.Get("displayName", "");
+            _username = Preferences.Get("username", "");
         }
 
         public ICommand SearchFriendCommand { get; private set; }

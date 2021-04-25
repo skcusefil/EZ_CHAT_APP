@@ -18,13 +18,37 @@
                                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
                 </StackLayout>
                 <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" >
-                    <Label FontSize="Large" Text="I am" />
-                    <Label FontSize="Large" Text= "{Binding DisplayName}" />
+                    <Label FontSize="Large" Text="Here login as" HorizontalTextAlignment="Center" TextColor="#088da5" />
+                    <Label FontSize="Large"  HorizontalTextAlignment="Center" TextColor="#088da5" >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Username: " />
+                                <Span Text= "{Binding Username}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label FontSize="Large"  HorizontalTextAlignment="Center" TextColor="#088da5" >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="DisplayName: " />
+                                <Span Text= "{Binding DisplayName}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
-                <StackLayout Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" >
-                    <Label Text="Here friend list" />
-                    <Button Text="Start Chat with Boom" Command="{Binding NavigateToChatCommand}" CommandParameter="boom" />
-                    <Button Text="Start Chat with Wun" Command="{Binding NavigateToChatCommand}" CommandParameter="wun" />
+                <StackLayout Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,10,10,5">
+                    <Label  TextColor="#088da5"
+                            Text="Here is just test button to click for start chat, which I already gave parameter, btw user can not send message to him/herself (I set in server side) if you try to send message to him/herself, you might get an error" />
+                    <Button Text="Start Chat with Boom" 
+                            Command="{Binding NavigateToChatCommand}" 
+                            CommandParameter="boom" 
+                            TextColor="White"  
+                            BackgroundColor="#088da5"/>
+                    <Button Text="Start Chat with Wun" 
+                            Command="{Binding NavigateToChatCommand}" 
+                            CommandParameter="wun" 
+                            TextColor="White" 
+                            BackgroundColor="#088da5" />
                 </StackLayout>
             </Grid>
         </StackLayout>

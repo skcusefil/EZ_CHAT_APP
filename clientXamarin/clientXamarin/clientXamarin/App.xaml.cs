@@ -19,6 +19,7 @@ namespace clientXamarin
 
             var accessToken = Preferences.Get("accessToken", "");
             //MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new ChatMainPage());
 
             if (string.IsNullOrEmpty(accessToken))
             {

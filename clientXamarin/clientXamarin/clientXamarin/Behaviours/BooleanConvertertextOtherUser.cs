@@ -7,36 +7,32 @@ using Xamarin.Forms;
 
 namespace clientXamarin.Behaviours
 {
-    public class ChatAlignmentConverter : IValueConverter
+    class BooleanConvertertextOtherUser : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value != null)
+            if (value != null)
             {
                 string textOwner = value.ToString();
                 var user = Preferences.Get("username", "");
-                var otherUsername = Preferences.Get("otherUsername", "");
+                if (textOwner != user)
+                {
+                    return true;
+                }
 
-                if(textOwner == user)
-                {
-                    return LayoutOptions.EndAndExpand;
-                }
-                else 
-                {
-                    return LayoutOptions.StartAndExpand;
-                }
-                
+                return false;
+
             }
             else
             {
-                return LayoutOptions.StartAndExpand;
+                return false;
             }
-         
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+
     }
 }
