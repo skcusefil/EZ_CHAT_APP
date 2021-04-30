@@ -14,13 +14,28 @@ namespace clientXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        NavigationService _page = new NavigationService();
+
         public MainPage()
         {
             InitializeComponent();
 
-            var page = new NavigationService();
-            BindingContext = new MainViewModel(page);
+            ViewModel = new MainViewModel(_page);
 
         }
+
+        public MainViewModel ViewModel
+        {
+            get => BindingContext as MainViewModel; 
+            set => BindingContext = value; 
+        }
+
+        protected override void OnAppearing()
+        {
+            ViewModel = new MainViewModel(_page);
+
+            base.OnAppearing();
+        }
+
     }
 }

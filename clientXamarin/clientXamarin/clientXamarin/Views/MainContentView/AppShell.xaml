@@ -5,8 +5,11 @@
              x:Class="clientXamarin.View.MainContent.AppShell">
     
     <TabBar x:Name="tabBar" >
-        <Tab Title="Main" x:Name="mainChatPage">
+        <Tab Title="Main" x:Name="chatMainPage">
             <ShellContent ContentTemplate="{DataTemplate local:ChatMainPage}"/>
+        </Tab>
+        <Tab Title="Profile" x:Name="profilePage">
+            <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}"/>
         </Tab>
     </TabBar>
 </Shell>

@@ -1,4 +1,5 @@
-﻿using clientXamarin.Services;
+﻿using clientXamarin.Interfaces;
+using clientXamarin.Services;
 using clientXamarin.Views.MainContentView;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,10 @@ namespace clientXamarin.ViewModels.MainContentViewModel
     {
 
         private readonly INavigationService _navigationService;
-        private readonly string _displayName;
+        private readonly IMemberService _memberService = new MemberService();
 
-        public string DisplayName { get => _displayName; }
+        private string _displayName;
+        public string DisplayName { get => _displayName; set => SetProperty(ref _displayName, value); }
 
         private string _username;
         public string Username { get => _username; }
@@ -26,8 +28,8 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         {
             InitializeCommand();
             _navigationService = navigationService;
-            _displayName = Preferences.Get("displayName", "");
             _username = Preferences.Get("username", "");
+            GetUserInfo();
         }
 
         public ICommand SearchFriendCommand { get; private set; }
@@ -37,6 +39,12 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         {
             SearchFriendCommand = new Command<string>(async (s) => await SearchFriend(s));
             NavigateToChatCommand = new Command<string>(async (u) => await NavigateToChatRoom(u));
+        }
+
+        private async void GetUserInfo()
+        {
+            var user = await _memberService.GetMember(_username);
+            DisplayName = user.DisplayName;
         }
 
         private async Task NavigateToChatRoom(string otherUsername)
@@ -49,7 +57,7 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         {
             try
             {
-                var member = await MemberService.GetMember(s);
+                var member = await _memberService.GetMember(s);
 
                 var otherUsername = member.Username;
             }

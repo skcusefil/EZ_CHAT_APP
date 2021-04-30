@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace clientXamarin.ViewModels
 {
-    class MainViewModel
+    public class MainViewModel
     {
         private readonly INavigationService _pageNavigation;
 

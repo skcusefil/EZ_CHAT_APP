@@ -1,4 +1,5 @@
 ﻿using clientXamarin.Configurations;
+using clientXamarin.Interfaces;
 using clientXamarin.Models;
 using Newtonsoft.Json;
 using System;
@@ -11,13 +12,13 @@ using Xamarin.Essentials;
 
 namespace clientXamarin.Services
 {
-    class MemberService
+    public class MemberService : IMemberService
     {
 
-        public static async Task<Member> GetMember(string username)
+        public async Task<Member> GetMember(string username)
         {
 
-        HttpClientHandler clientHandler = new HttpClientHandler();
+            HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
 
@@ -34,6 +35,32 @@ namespace clientXamarin.Services
             var result = JsonConvert.DeserializeObject<Member>(response);
 
             return result;
+        }
+
+        public async Task<bool> EditMember(string displayName)
+        {
+            var username = Preferences.Get("username", "");
+
+            var updateMember = new MemberUpdate
+            {
+                DisplayName = displayName
+            };
+
+            var json = JsonConvert.SerializeObject(updateMember);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+
+            var httpClient = new HttpClient(clientHandler);
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accessToken", string.Empty));
+
+            var response = await httpClient.PutAsync(ServerConnectionString.RestUrl + "api/user", content);
+
+            if (!response.IsSuccessStatusCode) return false;
+
+            return true;
         }
     }
 }

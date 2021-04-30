@@ -19,7 +19,7 @@ namespace clientXamarin.View.MainContent
         {
             InitializeComponent();
 
-            tabBar.CurrentItem = mainChatPage;
+            tabBar.CurrentItem = chatMainPage;
 
             RegisterRoutes();
             BindingContext = this;
@@ -30,6 +30,8 @@ namespace clientXamarin.View.MainContent
             //var JsonStr = JsonConvert.SerializeObject();
 
             Routes.Add(nameof(ChatMainPage), typeof(ChatMainPage));
+            Routes.Add(nameof(ProfilePage), typeof(ProfilePage));
+
         }
     }
 }

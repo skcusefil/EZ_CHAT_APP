@@ -27,7 +27,7 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Label FontSize="Large"  HorizontalTextAlignment="Center" TextColor="#088da5" >
+                    <Label x:Name="displayName" FontSize="Large"  HorizontalTextAlignment="Center" TextColor="#088da5" >
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="DisplayName: " />

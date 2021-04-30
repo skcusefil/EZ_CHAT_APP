@@ -1,6 +1,10 @@
-﻿using clientXamarin.ViewModels.MainContentViewModel;
+﻿using clientXamarin.Controls;
+using clientXamarin.Interfaces;
+using clientXamarin.Services;
+using clientXamarin.ViewModels.MainContentViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,24 +18,33 @@ namespace clientXamarin.Views.MainContentView
     public partial class ChatRoomPage : ContentPage
     {
         private readonly string _otherUsername;
+        IChatServices _chatServices;
 
         public ChatRoomPage(string otherUsername)
         {
             InitializeComponent();
             _otherUsername = otherUsername;
+            _chatServices = new ChatService(_otherUsername);
 
-            ViewModel = new ChatRoomViewModel(otherUsername);
-            BindingContext = ViewModel;
-
+            ViewModel = new ChatRoomViewModel(_otherUsername, _chatServices);
+        
         }
 
-        public ChatRoomViewModel ViewModel { get; }
-
+        public ChatRoomViewModel ViewModel
+        {
+            get => BindingContext as ChatRoomViewModel;
+            set
+            {
+                BindingContext = value;
+            }
+        }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
             ViewModel.Init();
+            chatListView.ScrollToLast();
+
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace clientXamarin.Models
 {
-    class Member
+    public class Member
     {
         public int Id { get; set; }
         public string Username { get; set; }
