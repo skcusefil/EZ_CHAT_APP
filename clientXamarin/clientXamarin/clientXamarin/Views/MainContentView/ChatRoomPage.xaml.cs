@@ -20,14 +20,15 @@ namespace clientXamarin.Views.MainContentView
         private readonly string _otherUsername;
         IChatServices _chatServices;
 
-        public ChatRoomPage(string otherUsername)
+        public ChatRoomPage(string otherUsername, IChatServices chatServices)
         {
             InitializeComponent();
             _otherUsername = otherUsername;
             _chatServices = new ChatService(_otherUsername);
 
             ViewModel = new ChatRoomViewModel(_otherUsername, _chatServices);
-        
+            chatListView.ScrollToLast();
+
         }
 
         public ChatRoomViewModel ViewModel
@@ -41,9 +42,10 @@ namespace clientXamarin.Views.MainContentView
 
         protected override void OnAppearing()
         {
+            chatListView.ScrollToLast();
+
             base.OnAppearing();
             ViewModel.Init();
-            chatListView.ScrollToLast();
 
         }
     }

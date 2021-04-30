@@ -13,7 +13,7 @@ namespace clientXamarin.ViewModels.MainContentViewModel
 {
     public class ChatMainPageViewModel : BaseViewModel
     {
-
+        private IChatServices _chatServices;
         private readonly INavigationService _navigationService;
         private readonly IMemberService _memberService = new MemberService();
 
@@ -49,7 +49,8 @@ namespace clientXamarin.ViewModels.MainContentViewModel
 
         private async Task NavigateToChatRoom(string otherUsername)
         {
-            await _navigationService.PushAsync(new ChatRoomPage(otherUsername));
+            _chatServices = new ChatService(otherUsername);
+            await _navigationService.PushAsync(new ChatRoomPage(otherUsername, _chatServices));
             Preferences.Set("ohterUsername", otherUsername);
         }
 

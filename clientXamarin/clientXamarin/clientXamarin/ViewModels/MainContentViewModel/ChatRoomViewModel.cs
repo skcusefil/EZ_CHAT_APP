@@ -81,6 +81,8 @@ namespace clientXamarin.ViewModels.MainContentViewModel
         private async void Connect()
         {
             await _chatServices.Connect(_otherUsername);
+            //Messages = new ObservableCollection<ChatMessage>();
+            Messages = ChatService._chats;
         }
 
         private async void SendMessage()

@@ -71,6 +71,7 @@ namespace clientXamarin.Services
                         {
                             item.SenderPhotoUrl = "user.png";
                         }
+                        _chats.Add(item);
                     }
                     _newMessages.OnNext(data);
 
