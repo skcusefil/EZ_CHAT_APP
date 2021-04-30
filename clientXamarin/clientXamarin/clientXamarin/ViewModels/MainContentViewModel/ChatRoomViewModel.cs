@@ -87,7 +87,11 @@ namespace clientXamarin.ViewModels.MainContentViewModel
 
         private async void SendMessage()
         {
-            await _chatServices.SendMessage(_otherUsername, _message);
+            if (Message == "")
+            {
+                return;
+            }
+            await _chatServices.SendMessage(_otherUsername, Message);
             Message = string.Empty;
         }
 
