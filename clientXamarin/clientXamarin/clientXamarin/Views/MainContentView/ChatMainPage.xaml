@@ -39,14 +39,14 @@
                 <StackLayout Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="10,10,10,5">
                     <Label  TextColor="#088da5"
                             Text="Here is just test button to click for start chat, which I already gave parameter, btw user can not send message to him/herself (I set in server side) if you try to send message to him/herself, you might get an error" />
-                    <Button Text="Start Chat with Boom" 
+                    <Button Text="Start Chat with Lina" 
                             Command="{Binding NavigateToChatCommand}" 
-                            CommandParameter="boom" 
+                            CommandParameter="lina" 
                             TextColor="White"  
                             BackgroundColor="#088da5"/>
-                    <Button Text="Start Chat with Wun" 
+                    <Button Text="Start Chat with Crystal" 
                             Command="{Binding NavigateToChatCommand}" 
-                            CommandParameter="wun" 
+                            CommandParameter="meiden" 
                             TextColor="White" 
                             BackgroundColor="#088da5" />
                 </StackLayout>

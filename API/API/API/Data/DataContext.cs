@@ -27,14 +27,16 @@ namespace API.Data
                 b.HasKey(k => new { k.InvitedUserId, k.SourceUserId });
 
                 b.HasOne(r => r.SourceUser)
-                .WithMany(f => f.InvitedFrom)
+                .WithMany(f => f.SentFriendRequests )
                 .HasForeignKey(o => o.SourceUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
                 b.HasOne(r => r.InvitedUser)
-                .WithMany(f => f.InvitedBy)
+                .WithMany(f => f.ReceievedFriendRequests)
                 .HasForeignKey(o => o.InvitedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+                
             });
 
             //ผู้รับข้อความ 1 คน สามารถรับข้อความจากผู้ส่งได้หลายคน

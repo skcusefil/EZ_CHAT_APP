@@ -84,9 +84,9 @@
                                                  IsVisible="{Binding SenderUsername, Converter={x:StaticResource BooleanConvertertextOtherUser}}">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="3*" />
+                                                    <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackLayout Grid.Column="0" VerticalOptions="Start" Padding="5,10,0,0">
                                                     <profileImage:CachedImage x:Name="profileImage"

@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public class AddFriendDto
+    public class FriendDto
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string DisplayName { get; set; }
+        public MemberDto Friend { get; set; } 
     }
 }
