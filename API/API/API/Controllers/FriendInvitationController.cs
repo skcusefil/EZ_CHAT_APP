@@ -15,18 +15,16 @@ namespace API.Controllers
     public class FriendInvitationController : BaseApiController
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public FriendInvitationController(IUnitOfWork unitOfWork, IMapper mapper)
+        public FriendInvitationController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         [HttpGet("friends")]
-        public async Task<ActionResult<IEnumerable<FriendDto>>> GetFriends()
+        public async Task<ActionResult<IEnumerable<FriendDto>>> GetUserFriends()
         {
-            var friends = await _unitOfWork.FriendRepository.GetFriends();
+            var friends = await _unitOfWork.FriendRepository.GetUserFriends();
 
             return Ok(friends);
         }
@@ -66,6 +64,19 @@ namespace API.Controllers
             _unitOfWork.FriendRepository.AddFriend(friendRequest);
 
             if (await _unitOfWork.Complete()) return Ok("Friend added");
+
+            return BadRequest("Failed to add friend");
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateFriendStatus(string status, string receivedFrom)
+        {
+            var currentUser = await _unitOfWork.UserRepository.GetUserByUsername(User.GetUsername());
+            var requestFrom = await _unitOfWork.UserRepository.GetUserByUsername(receivedFrom);
+
+            _unitOfWork.FriendRepository.UpdateFriendStatus(status, requestFrom, currentUser);
+
+            if (await _unitOfWork.Complete()) return Ok(requestFrom.DisplayName +" is now friend with "+ currentUser.DisplayName);
 
             return BadRequest("Failed to add friend");
         }

@@ -23,7 +23,7 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FriendDto>> GetFriends()
+        public async Task<IEnumerable<FriendDto>> GetUserFriends()
         {
             var friends = await _context.FriendInvitations.Where(u => u.FriendStatus == FriendStatus.Approved).ToListAsync();
 
@@ -88,6 +88,16 @@ namespace API.Data
         public void AddFriend(FriendInvitation friendInvitation)
         {
             _context.FriendInvitations.Add(friendInvitation);
+        }
+        
+        public async void UpdateFriendStatus(string status, AppUser requestFrom, AppUser currentUser)
+        {
+            var friendRequest = await _context.FriendInvitations.Where(user => user.InvitedUser == currentUser && user.SourceUser == requestFrom).FirstOrDefaultAsync();
+
+            friendRequest.FriendStatus = FriendStatus.Approved;
+
+
+            _context.Entry(friendRequest).State = EntityState.Modified;
         }
     }
 }
