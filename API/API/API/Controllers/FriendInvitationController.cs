@@ -76,7 +76,7 @@ namespace API.Controllers
 
             _unitOfWork.FriendRepository.UpdateFriendStatus(status, requestFrom, currentUser);
 
-            if (await _unitOfWork.Complete()) return Ok(requestFrom.DisplayName +" is now friend with "+ currentUser.DisplayName);
+            if (await _unitOfWork.Complete()) return Ok("You "+status.ToLower()+" friend request from "+ requestFrom.DisplayName);
 
             return BadRequest("Failed to add friend");
         }

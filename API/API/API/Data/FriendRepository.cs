@@ -94,7 +94,24 @@ namespace API.Data
         {
             var friendRequest = await _context.FriendInvitations.Where(user => user.InvitedUser == currentUser && user.SourceUser == requestFrom).FirstOrDefaultAsync();
 
-            friendRequest.FriendStatus = FriendStatus.Approved;
+            switch(status)
+            {
+                case "Approved": 
+                    friendRequest.FriendStatus = FriendStatus.Approved;
+                    break;
+                case "None": 
+                    friendRequest.FriendStatus = FriendStatus.None;
+                    break;
+                case "Blocked":
+                    friendRequest.FriendStatus = FriendStatus.Blocked;
+                    break;
+                case "Rejected":
+                    friendRequest.FriendStatus = FriendStatus.Rejected;
+                    break;
+                case "Spam":
+                    friendRequest.FriendStatus = FriendStatus.Spam;
+                    break;
+            }
 
 
             _context.Entry(friendRequest).State = EntityState.Modified;
