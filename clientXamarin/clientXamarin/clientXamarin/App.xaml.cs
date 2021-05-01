@@ -18,20 +18,20 @@ namespace clientXamarin
             InitializeComponent();
 
             var accessToken = Preferences.Get("accessToken", "");
-            //MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage());
             //MainPage = new NavigationPage(new ProfilePage());
 
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                //dont have any access token yet will navigate to Login Page
-                MainPage = new NavigationPage(new MainPage());
+            //if (string.IsNullOrEmpty(accessToken))
+            //{
+            //    //dont have any access token yet will navigate to Login Page
+            //    MainPage = new NavigationPage(new MainPage());
 
-            }
-            else
-            {
-                // already login and get access token can go direkt to AppShell
-                MainPage = new AppShell();
-            }
+            //}
+            //else
+            //{
+            //    // already login and get access token can go direkt to AppShell
+            //    MainPage = new AppShell();
+            //}
             //MainPage = new AppShell();
         }
 

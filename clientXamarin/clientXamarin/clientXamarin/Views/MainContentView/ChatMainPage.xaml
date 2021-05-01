@@ -46,7 +46,7 @@
                             BackgroundColor="#088da5"/>
                     <Button Text="Start Chat with Crystal" 
                             Command="{Binding NavigateToChatCommand}" 
-                            CommandParameter="meiden" 
+                            CommandParameter="crystal" 
                             TextColor="White" 
                             BackgroundColor="#088da5" />
                 </StackLayout>
